@@ -9,7 +9,7 @@
       </p>
     </div>
   
-    <!-- ====== GRID PRINCIPAL (Gráfico + Destaque) ====== -->
+    <!-- ====== GRID PRINCIPAL (Gráfico + Resumo + Destaque) ====== -->
     <div class="main-content-grid">
   
       <!-- ====== CARD DO GRÁFICO ====== -->
@@ -21,36 +21,76 @@
           <div *ngIf="distributionData$ | async as chartData; else loadingChart" 
                class="chart-wrapper" 
                #chartContainer>
-            <!-- ✅ ADVANCED PIE CHART com formatação personalizada -->
+            <!-- PIE CHART -->
             <ngx-charts-pie-chart
-        [view]="view"
-        [scheme]="scheme"
-        [results]="chartData"
-        [legend]="true"
-       
-        [legendTitle]="'Investimentos'"
-        [labels]="true"
-        [doughnut]="true"
-        [arcWidth]="0.35"
-        [animations]="true"
-        [trimLabels]="false"
-        [maxLabelLength]="20"
-        (window:resize)="onResize(chartContainer)">
-      </ngx-charts-pie-chart>
-       <!-- ✅ Legenda customizada com porcentagens -->
-       <div class="custom-legend" *ngIf="chartData && chartData.length > 0">
-        <div class="legend-item" *ngFor="let item of chartData">
-          <div class="legend-color" [style.background-color]="getColorForItem(item.name)"></div>
-          <div class="legend-info">
-            <div class="legend-name">{{ item.name }}</div>
-            <div class="legend-stats">
-              <span class="legend-value">{{ item.value | currency:'BRL' }}</span>
-              <span class="legend-percent">{{ calculatePercentage(item.value) }}%</span>
+              [view]="view"
+              [scheme]="scheme"
+              [results]="chartData"
+              [legend]="true"
+              [legendTitle]="'Investimentos'"
+              [labels]="true"
+              [doughnut]="true"
+              [arcWidth]="0.35"
+              [animations]="true"
+              [trimLabels]="false"
+              [maxLabelLength]="20"
+              (window:resize)="onResize(chartContainer)">
+            </ngx-charts-pie-chart>
+  
+            <!-- Legenda customizada -->
+            <div class="custom-legend" *ngIf="chartData && chartData.length > 0">
+              <div class="legend-item" *ngFor="let item of chartData">
+                <div class="legend-color" [style.background-color]="getColorForItem(item.name)"></div>
+                <div class="legend-info">
+                  <div class="legend-name">{{ item.name }}</div>
+                  <div class="legend-stats">
+                    <span class="legend-value">{{ item.value | currency:'BRL' }}</span>
+                    <span class="legend-percent">{{ calculatePercentage(item.value) }}%</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- ====== NOVO: CARD DE RESUMO FINANCEIRO ====== -->
+      <mat-card class="summary-card" *ngIf="distributionData$ | async as chartData">
+        <mat-card-header>
+          <mat-card-title>💰 Resumo Financeiro</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          
+          <!-- Total Investido -->
+          <div class="summary-item highlight">
+            <div class="summary-label">Total Investido</div>
+            <div class="summary-value">{{ getTotalInvestido() | currency:'BRL' }}</div>
           </div>
+  
+          <!-- Rentabilidade Média -->
+          <div class="summary-item">
+            <div class="summary-label">Rentabilidade Média</div>
+            <div class="summary-value positive">{{ getRentabilidadeMedia() | percent:'1.2-2' }}</div>
+          </div>
+  
+          <!-- Maior Investimento -->
+          <div class="summary-item">
+            <div class="summary-label">Maior Investimento</div>
+            <div class="summary-value-medium">{{ getMaiorInvestimento() }}</div>
+          </div>
+  
+          <!-- Número de Ativos -->
+          <div class="summary-item">
+            <div class="summary-label">Número de Ativos</div>
+            <div class="summary-value-medium">{{ getNumeroAtivos() }}</div>
+          </div>
+  
+          <!-- Último Investimento -->
+          <div class="summary-item" *ngIf="history$ | async as history">
+            <div class="summary-label">Último Investimento</div>
+            <div class="summary-value-small">{{ getUltimoInvestimento(history) | date:'dd/MM/yyyy' }}</div>
+          </div>
+  
         </mat-card-content>
       </mat-card>
   

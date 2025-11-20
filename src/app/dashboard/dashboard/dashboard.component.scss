@@ -172,7 +172,7 @@
       .pie-label {
         font-size: 0.85rem !important;
         font-weight: 600 !important;
-        fill: var(--caixa-white) !important;
+        fill: var(--caixa-primary-130) !important;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
       }
     }
@@ -435,10 +435,18 @@
   .highlight-card {
     display: flex;
     flex-direction: column;
+
+    
     justify-content: space-between;
     background: linear-gradient(135deg, var(--caixa-white) 0%, var(--caixa-primary-10) 100%);
     border-left: 4px solid var(--caixa-secondary-70);
   
+    mat-card-header {
+        width: 100%; // ✅ Header ocupa toda largura
+        display: flex;
+        flex-direction: column;
+        align-items: center; // ✅ Centraliza header
+      }
     mat-card-title {
       font-size: 1rem;
       font-weight: 500;
@@ -840,6 +848,126 @@
   
     .main-dashboard-container {
       padding: var(--spacing-sm);
+    }
+  }
+  /* CARD DE RESUMO FINANCEIRO  */
+.summary-card {
+    background: var(--caixa-white);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--caixa-shadow-md);
+    transition: all 0.3s ease;
+  
+    &:hover {
+      box-shadow: var(--caixa-shadow-lg);
+      transform: translateY(-2px);
+    }
+  
+    mat-card-header {
+      margin-bottom: var(--spacing-lg);
+    }
+  
+    mat-card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--caixa-primary-90);
+    }
+  
+    mat-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+  }
+  
+  
+  .summary-item {
+    padding: var(--spacing-md);
+    background: var(--caixa-greyscale-10);
+    border-radius: var(--border-radius-sm);
+    border-left: 4px solid var(--caixa-greyscale-50);
+    transition: all 0.2s ease;
+  
+    &:hover {
+      background: var(--caixa-primary-10);
+      border-left-color: var(--caixa-primary-70);
+      transform: translateX(4px);
+    }
+  
+    // Destaque especial para o total
+    &.highlight {
+      background: linear-gradient(135deg, var(--caixa-primary-10) 0%, var(--caixa-secondary-10) 100%);
+      border-left-color: var(--caixa-primary-90);
+      border-left-width: 5px;
+    }
+  
+    .summary-label {
+      font-size: 0.85rem;
+      color: var(--caixa-greyscale-90);
+      margin-bottom: 6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  
+    .summary-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--caixa-primary-90);
+      line-height: 1.2;
+  
+      &.positive {
+        color: var(--caixa-positive-90);
+      }
+  
+      &.negative {
+        color: var(--caixa-negative-90);
+      }
+    }
+  
+    .summary-value-medium {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--caixa-primary-90);
+    }
+  
+    .summary-value-small {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--caixa-greyscale-110);
+    }
+  }
+  
+  //  Responsividade do grid
+  @media (max-width: 900px) {
+    .main-content-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .summary-card {
+      mat-card-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+      }
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .summary-card {
+      mat-card-content {
+        grid-template-columns: 1fr;
+      }
+  
+      .summary-item {
+        .summary-value {
+          font-size: 1.25rem;
+        }
+  
+        .summary-value-medium {
+          font-size: 1.1rem;
+        }
+      }
     }
   }
   

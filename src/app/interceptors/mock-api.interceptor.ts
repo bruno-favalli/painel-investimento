@@ -38,43 +38,65 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
 
   if (req.url.includes('/perfil-risco/') && req.method === 'GET') {
     
-    const clientId = req.url.split('/').pop();
-    console.log('INTERCEPTOR: Capturando perfil para clientId:', clientId);
+    const clientId = req.url.split('/perfil-risco/')[1];
+  console.log('INTERCEPTOR: Capturando perfil para clientId:', clientId);
 
-    let perfil = 'Moderado';
-    let pontuacao = 65;
-    let nomeCliente = 'Rafael Souza'; // <-- Valor Padrão (Moderado)
-    let descricao = 'Perfil equilibrado entre segurança e rentabilidade.';
+  // ✅ CORREÇÃO: Mapear cada ID para o perfil correto
+  let perfilData;
 
-    // 1. Lógica Dinâmica: Perfil e Nome
-    if (clientId === '101') {
-        perfil = 'Conservador';
-        pontuacao = 30;
-        nomeCliente = 'Ana Silva';
-        descricao = 'Foco em segurança e liquidez, baixo risco.';
-    } else if (clientId === '202') {
-        perfil = 'Agressivo';
-        pontuacao = 85;
-        nomeCliente = 'Marcos Oliveira';
-        descricao = 'Foco em alta rentabilidade, disposto a correr altos riscos.';
-    }
-    const mockProfileResponse: ProfileResponse = {
-            clientId: Number(clientId),
-            nomeCliente: nomeCliente, // <-- Usa o nome do cliente correto (Marcos Oliveira)
-            perfil: perfil, // <-- CORRIGIDO: Usa a variável 'perfil' ('Agressivo', 'Moderado', etc.)
-            descricao: descricao, // <-- CORRIGIDO: Usa a descrição dinâmica
-            pontuacao: pontuacao // <-- CORRIGIDO: Usa a pontuação dinâmica
-          };
+  switch(clientId) {
+    case '1':
+      perfilData = {
+        clienteId: 1,
+        nomeCliente: 'João Silva',
+        perfil: 'Moderado',
+        toleranciaRisco: 'Médio',
+        objetivoInvestimento: 'Crescimento moderado com segurança',
+        prazoInvestimento: '3-5 anos'
+      };
+      break;
 
-    const httpResponse = new HttpResponse({
-      status: 200,
-      statusText: 'OK',
-      body: mockProfileResponse
-    });
+    case '2':
+      perfilData = {
+        clienteId: 2,
+        nomeCliente: 'Maria Santos',
+        perfil: 'Agressivo',
+        toleranciaRisco: 'Alto',
+        objetivoInvestimento: 'Máximo crescimento de capital',
+        prazoInvestimento: '5-10 anos'
+      };
+      break;
 
-    return of(httpResponse).pipe(delay(800));
+    case '3':
+      perfilData = {
+        clienteId: 3,
+        nomeCliente: 'Pedro Costa',
+        perfil: 'Conservador',
+        toleranciaRisco: 'Baixo',
+        objetivoInvestimento: 'Preservação de capital',
+        prazoInvestimento: '1-3 anos'
+      };
+      break;
+
+    default:
+      // Fallback para Moderado
+      perfilData = {
+        clienteId: parseInt(clientId) || 1,
+        nomeCliente: 'Cliente Padrão',
+        perfil: 'Moderado',
+        toleranciaRisco: 'Médio',
+        objetivoInvestimento: 'Crescimento moderado',
+        prazoInvestimento: '3-5 anos'
+      };
   }
 
+  console.log('INTERCEPTOR: Retornando perfil:', perfilData.perfil);
+
+  return of(new HttpResponse({
+    status: 200,
+    body: perfilData
+  })).pipe(delay(300));
+}
   if(req.url.includes('/produtos-recomendados/') && req.method === 'GET') {
     const perfil = req.url.split('/').pop();
     console.log(`INTERCEPTOR: Buscando produtos para o perfil: ${perfil}`);
@@ -118,40 +140,91 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   // --- Simulação: Histórico de Investimentos ---
 if (req.url.includes('/investimentos/') && req.method === 'GET') {
     
-  const clientId = req.url.split('/').pop();
-  let mockHistoryResponse: InvestmentHistory[] = [];
+  const clientId = req.url.split('/investimentos/')[1];
+  console.log('INTERCEPTOR: Buscando investimentos para clientId:', clientId);
 
-  // Lógica Dinâmica: Histórico de Investimentos por Perfil
-  if (clientId === '101') {
-      // Conservador: Mais CDB e LCI, pouco Fundo
-      mockHistoryResponse = [
-          { "id": 1, "tipo": "CDB", "valor": 8000, "rentabilidade": 0.11, "data": "2025-01-15" },
-          { "id": 2, "tipo": "LCI", "valor": 6000, "rentabilidade": 0.09, "data": "2025-03-10" },
-          { "id": 3, "tipo": "Fundo Renda Fixa", "valor": 1000, "rentabilidade": 0.07, "data": "2025-04-02" }
+  let investimentos: any[];
+
+  switch(clientId) {
+    case '1': // Moderado
+      investimentos = [
+        {
+          tipo: 'CDB',
+          valor: 5000,
+          data: new Date('2024-06-15'),
+          rentabilidade: 0.095
+        },
+        {
+          tipo: 'Tesouro Direto',
+          valor: 3000,
+          data: new Date('2024-07-01'),
+          rentabilidade: 0.085
+        },
+        {
+          tipo: 'Fundo Multimercado',
+          valor: 2000,
+          data: new Date('2024-08-10'),
+          rentabilidade: 0.11
+        }
       ];
-  } else if (clientId === '202') {
-      // Agressivo: Mais Ações e Fundos Multimercado
-      mockHistoryResponse = [
-          { "id": 1, "tipo": "Ações", "valor": 12000, "rentabilidade": 0.20, "data": "2025-01-15" },
-          { "id": 2, "tipo": "Fundo Multimercado", "valor": 8000, "rentabilidade": 0.15, "data": "2025-03-10" },
-          { "id": 3, "tipo": "Tesouro Direto", "valor": 500, "rentabilidade": 0.12, "data": "2025-04-02" }
+      break;
+
+    case '2': // Agressivo
+      investimentos = [
+        {
+          tipo: 'Ações',
+          valor: 8000,
+          data: new Date('2024-05-20'),
+          rentabilidade: 0.18
+        },
+        {
+          tipo: 'Fundo Multimercado',
+          valor: 5000,
+          data: new Date('2024-06-15'),
+          rentabilidade: 0.15
+        },
+        {
+          tipo: 'CDB',
+          valor: 3000,
+          data: new Date('2024-07-10'),
+          rentabilidade: 0.12
+        }
       ];
-  } else {
-      // Moderado (Padrão): CDB e Tesouro
-      mockHistoryResponse = [
-          { "id": 1, "tipo": "CDB", "valor": 5000, "rentabilidade": 0.12, "data": "2025-01-15" },
-          { "id": 2, "tipo": "Tesouro Direto", "valor": 3000, "rentabilidade": 0.11, "data": "2025-03-10" },
-          { "id": 3, "tipo": "Fundo Multimercado", "valor": 2000, "rentabilidade": 0.08, "data": "2025-04-02" }
+      break;
+
+    case '3': // Conservador
+      investimentos = [
+        {
+          tipo: 'Tesouro Direto',
+          valor: 6000,
+          data: new Date('2024-06-01'),
+          rentabilidade: 0.075
+        },
+        {
+          tipo: 'CDB',
+          valor: 4000,
+          data: new Date('2024-07-15'),
+          rentabilidade: 0.08
+        },
+        {
+          tipo: 'Poupança',
+          valor: 2000,
+          data: new Date('2024-08-01'),
+          rentabilidade: 0.065
+        }
       ];
+      break;
+
+    default:
+      investimentos = [];
   }
 
-  const httpResponse = new HttpResponse({
-      status: 200,
-      statusText: 'OK',
-      body: mockHistoryResponse
-  });
+  console.log('INTERCEPTOR: Retornando', investimentos.length, 'investimentos');
 
-  return of(httpResponse).pipe(delay(1500));
+  return of(new HttpResponse({
+    status: 200,
+    body: investimentos
+  })).pipe(delay(300));
 }
 
   // --- Simulação: Simulador de Investimento ---

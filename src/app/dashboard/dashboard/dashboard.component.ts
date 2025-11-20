@@ -207,4 +207,35 @@ isSimulating = false;
       this.cdr.markForCheck();
     }, 1000);
   }
+  getTotalInvestido(): number {
+    if (!this.chartData || this.chartData.length === 0) return 0;
+    return this.chartData.reduce((sum, item) => sum + item.value, 0);
+  }
+  
+  getRentabilidadeMedia(): number {
+    // Calcula rentabilidade média baseada no histórico
+    return 0.0875; // 8,75% - Você pode calcular dinamicamente do seu histórico
+  }
+  
+  getMaiorInvestimento(): string {
+    if (!this.chartData || this.chartData.length === 0) return '-';
+    const maior = this.chartData.reduce((prev, current) => 
+      (prev.value > current.value) ? prev : current
+    );
+    return maior.name;
+  }
+  
+  getNumeroAtivos(): number {
+    return this.chartData ? this.chartData.length : 0;
+  }
+  
+  getUltimoInvestimento(history: any[]): Date {
+    if (!history || history.length === 0) return new Date();
+    // Ordena por data e pega o mais recente
+    const sorted = history.sort((a, b) => 
+      new Date(b.data).getTime() - new Date(a.data).getTime()
+    );
+    return sorted[0].data;
+  }
+  
 }

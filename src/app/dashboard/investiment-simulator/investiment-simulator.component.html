@@ -1,45 +1,69 @@
+
 <mat-card class="simulator-card">
-    <mat-card-header>
+  
+    <!-- Header -->
+    <mat-card-header class="simulator-header">
       <mat-card-title>Simulador de Investimentos</mat-card-title>
       <mat-card-subtitle>Faça uma simulação e veja seu dinheiro render</mat-card-subtitle>
     </mat-card-header>
   
     <mat-card-content>
-      <form [formGroup]="simulationForm" (ngSubmit)="onSimulate()" class="simulator-form">
+      
+      <!-- Formulário -->
+      <form class="simulator-form" [formGroup]="simulatorForm" (ngSubmit)="simulate()">
         
+        <!-- Valor a Investir -->
         <mat-form-field appearance="outline">
           <mat-label>Valor a Investir (R$)</mat-label>
-          <input matInput type="number" formControlName="valor">
+          <input matInput 
+                 type="number" 
+                 formControlName="valor"
+                 placeholder="1000">
+          <span matPrefix>R$&nbsp;</span>
         </mat-form-field>
   
+        <!-- Prazo -->
         <mat-form-field appearance="outline">
           <mat-label>Prazo (Meses)</mat-label>
-          <input matInput type="number" formControlName="prazoMeses">
+          <input matInput 
+                 type="number" 
+                 formControlName="prazo"
+                 placeholder="12">
         </mat-form-field>
   
+        <!-- Tipo de Investimento -->
         <mat-form-field appearance="outline">
           <mat-label>Tipo de Investimento</mat-label>
           <mat-select formControlName="tipo">
-            <mat-option *ngFor="let tipo of tiposInvestimento" [value]="tipo">
-              {{ tipo }}
-            </mat-option>
+            <mat-option value="CDB">CDB</mat-option>
+            <mat-option value="Tesouro Direto">Tesouro Direto</mat-option>
+            <mat-option value="Fundo Multimercado">Fundo Multimercado</mat-option>
+            <mat-option value="Ações">Ações</mat-option>
           </mat-select>
         </mat-form-field>
   
-        <button mat-flat-button color="primary" type="submit" [disabled]="simulationForm.invalid">
+        <!-- Botão Simular -->
+        <button mat-flat-button 
+                type="submit" 
+                [disabled]="simulatorForm.invalid">
+          <mat-icon>calculate</mat-icon>
           Simular Rendimento
         </button>
   
       </form>
   
-      <div class="result-container" *ngIf="simulationResult$ | async as result">
-        <div class="result-box">
-          <h3>Resultado da Simulação</h3>
-          <p class="valor-final">{{ result.valorFinal | currency:'BRL' }}</p>
-          <p class="detalhes">{{ result.detalhes }}</p>
-          <small>Rentabilidade estimada: {{ result.rentabilidade | percent:'1.2-2' }} ao ano</small>
-        </div>
+      <!-- Resultado -->
+      <div class="result-container" *ngIf="resultado">
+        <h3>Resultado da Simulação</h3>
+        <div class="valor-final">{{ resultado.valorFinal | currency:'BRL' }}</div>
+        <p>
+          Investindo <strong>{{ resultado.valorInicial | currency:'BRL' }}</strong> por 
+          <strong>{{ resultado.prazo }} meses</strong>, você terá um rendimento de 
+          <strong>{{ resultado.rendimento | currency:'BRL' }}</strong>
+        </p>
       </div>
   
     </mat-card-content>
+  
   </mat-card>
+  

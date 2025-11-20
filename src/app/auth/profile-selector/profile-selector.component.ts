@@ -19,20 +19,35 @@ export class ProfileSelectionComponent {
 
   constructor(private router: Router) {}
 
-  // ✅ Função para selecionar perfil e redirecionar
+  // ✅ Função CORRIGIDA para selecionar perfil
   selectProfile(profile: string): void {
-    // Mapear perfil para ID correspondente
-    const profileIds: { [key: string]: string } = {
-      'Conservador': '3',
-      'Moderado': '1',
-      'Agressivo': '2'
-    };
+    console.log('Perfil selecionado:', profile); // ✅ Debug
+
+    // ✅ Mapear perfil para ID correspondente
+    let clientId: string;
+    
+    switch(profile) {
+      case 'Conservador':
+        clientId = '3';
+        break;
+      case 'Moderado':
+        clientId = '1';
+        break;
+      case 'Agressivo':
+        clientId = '2';
+        break;
+      default:
+        clientId = '1'; // Padrão = Moderado
+    }
+
+    console.log('Client ID:', clientId); // ✅ Debug
 
     // Salvar ID do cliente no localStorage
-    const clientId = profileIds[profile];
     localStorage.setItem('caixa-invest-clientId', clientId);
 
-    // Redirecionar para o dashboard
-    this.router.navigate(['/dashboard']);
+    // ✅ Forçar recarregamento da página para buscar novo perfil
+    this.router.navigate(['/dashboard']).then(() => {
+      window.location.reload();
+    });
   }
 }

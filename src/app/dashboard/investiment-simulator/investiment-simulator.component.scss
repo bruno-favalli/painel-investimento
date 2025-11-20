@@ -1,55 +1,276 @@
-.simulator-card {
-    max-width: 800px;
-    margin: 20px auto;
-    border: 1px solid #e0e0e0;
+/* ========================================
+   SIMULADOR - DESIGN SYSTEM CAIXA
+   ======================================== */
+
+   .simulator-card {
+    max-width: 1200px;
+    margin: var(--spacing-2xl) auto;
+    background: var(--caixa-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--caixa-shadow-lg);
+    padding: var(--spacing-2xl);
+    border: none;
+    transition: all 0.3s ease;
+  
+    &:hover {
+      box-shadow: var(--caixa-shadow-xl);
+    }
   }
   
+  // ✅ Header do Simulador
+  .simulator-header {
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 2px solid var(--caixa-primary-90);
+    padding-bottom: var(--spacing-md);
+  
+    mat-card-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--caixa-primary-90);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+  
+      &::before {
+        content: '🧮';
+        font-size: 2rem;
+      }
+    }
+  
+    mat-card-subtitle {
+      font-size: 1rem;
+      color: var(--caixa-greyscale-90);
+      margin-top: var(--spacing-xs);
+      font-weight: 400;
+    }
+  }
+  
+  // ✅ Formulário do Simulador
   .simulator-form {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    align-items: end;
+    margin-bottom: var(--spacing-xl);
   
     mat-form-field {
-      flex: 1;
-      min-width: 120px; /* Reduzido para melhor adaptação */
+      width: 100%;
+  
+      // ✅ Estilo dos campos
+      ::ng-deep {
+        .mat-mdc-text-field-wrapper {
+          background-color: var(--caixa-greyscale-10);
+          border-radius: var(--border-radius-sm);
+        }
+  
+        .mat-mdc-form-field-focus-overlay {
+          background-color: var(--caixa-primary-10);
+        }
+  
+        label {
+          font-weight: 600;
+          color: var(--caixa-primary-90);
+        }
+  
+        input,
+        .mat-mdc-select {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: var(--caixa-greyscale-130);
+        }
+  
+        .mat-mdc-form-field-subscript-wrapper {
+          margin-top: 4px;
+        }
+      }
+    }
+  
+    // ✅ Botão Simular
+    button {
+      min-height: 56px !important;
+      font-size: 1.1rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.5px !important;
+      background: linear-gradient(135deg, var(--caixa-primary-90) 0%, var(--caixa-primary-110) 100%) !important;
+      color: var(--caixa-white) !important;
+      box-shadow: var(--caixa-shadow-md) !important;
+      border-radius: var(--border-radius-md) !important;
+      transition: all 0.3s ease !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: var(--spacing-sm);
+  
+      mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+  
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, var(--caixa-primary-110) 0%, var(--caixa-primary-130) 100%) !important;
+        box-shadow: var(--caixa-shadow-lg) !important;
+        transform: translateY(-2px);
+      }
+  
+      &:active:not(:disabled) {
+        transform: translateY(0) scale(0.98);
+      }
+  
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
     }
   }
   
+  // ✅ Container do Resultado
   .result-container {
-    margin-top: 24px;
-    padding: 16px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    text-align: center;
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-2xl);
+    background: linear-gradient(135deg, var(--caixa-primary-10) 0%, var(--caixa-secondary-10) 100%);
+    border-radius: var(--border-radius-lg);
+    border-left: 6px solid var(--caixa-primary-90);
+    box-shadow: var(--caixa-shadow-md);
+    animation: fadeInUp 0.5s ease-out;
+  
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--caixa-greyscale-110);
+      margin: 0 0 var(--spacing-md) 0;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
   
     .valor-final {
-      font-size: 2em;
-      font-weight: bold;
-      color: #005CA9; 
-      margin: 8px 0;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--caixa-primary-90);
+      margin: var(--spacing-md) 0;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 92, 169, 0.1);
+      line-height: 1.2;
+    }
+  
+    p {
+      font-size: 1rem;
+      color: var(--caixa-greyscale-90);
+      text-align: center;
+      margin: var(--spacing-sm) 0 0;
+  
+      strong {
+        color: var(--caixa-positive-90);
+        font-weight: 700;
+      }
     }
   }
   
-  /* ➡️ RESPONSIVIDADE: Mobile (Simulador) */
-  @media (max-width: 600px) {
-      .simulator-form {
-          flex-direction: column; 
-          align-items: stretch;
-      }
-      
-      mat-card-header {
-          text-align: center;
-          display: block;
-      }
-      
-      mat-form-field {
-          width: 100% !important; 
-          min-width: 100% !important;
-      }
-      
-      button {
-          width: 100%;
-      }
+  // ✅ Animação
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
+  
+  // ✅ RESPONSIVIDADE
+  @media (max-width: 900px) {
+    .simulator-card {
+      margin: var(--spacing-xl) var(--spacing-md);
+      padding: var(--spacing-xl);
+    }
+  
+    .simulator-form {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+  
+    .simulator-header {
+      mat-card-title {
+        font-size: 1.5rem;
+      }
+    }
+  
+    .result-container {
+      padding: var(--spacing-xl);
+  
+      .valor-final {
+        font-size: 2.5rem;
+      }
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .simulator-card {
+      margin: var(--spacing-lg) var(--spacing-sm);
+      padding: var(--spacing-lg);
+    }
+  
+    .simulator-header {
+      mat-card-title {
+        font-size: 1.25rem;
+        flex-direction: column;
+        text-align: center;
+  
+        &::before {
+          font-size: 1.75rem;
+        }
+      }
+  
+      mat-card-subtitle {
+        font-size: 0.9rem;
+        text-align: center;
+      }
+    }
+  
+    .simulator-form {
+      gap: var(--spacing-sm);
+  
+      button {
+        min-height: 48px !important;
+        font-size: 1rem !important;
+      }
+    }
+  
+    .result-container {
+      padding: var(--spacing-lg);
+      margin-top: var(--spacing-lg);
+  
+      h3 {
+        font-size: 1.1rem;
+      }
+  
+      .valor-final {
+        font-size: 2rem;
+      }
+  
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .simulator-card {
+      padding: var(--spacing-md);
+    }
+  
+    .simulator-header {
+      mat-card-title {
+        font-size: 1.1rem;
+      }
+    }
+  
+    .result-container {
+      .valor-final {
+        font-size: 1.75rem;
+      }
+    }
+  }
+  
