@@ -1,59 +1,112 @@
-# PainelInvestimentos
+# 📊 Painel de Investimentos CAIXA
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+Sistema de gerenciamento de investimentos desenvolvido com Angular 19, seguindo o Design System da CAIXA.
 
-## Development server
+## 🎯 Sobre o Projeto
 
-To start a local development server, run:
+Aplicação completa para simulação e acompanhamento de investimentos, com diferentes perfis de risco (Conservador, Moderado e Agressivo).
 
-```bash
+## 🚀 Tecnologias Utilizadas
+
+- **Angular 19** - Framework principal
+- **TypeScript** - Linguagem de programação
+- **Angular Material** - Biblioteca de componentes UI
+- **NGX-Charts** - Biblioteca para gráficos
+- **RxJS** - Programação reativa
+- **SCSS** - Estilização avançada
+
+## 💡 Funcionalidades
+
+- ✅ Login com autenticação
+- ✅ Seleção de perfil de investidor (Conservador, Moderado, Agressivo)
+- ✅ Dashboard personalizado por perfil
+- ✅ Gráfico de distribuição de ativos (Pizza/Donut)
+- ✅ Resumo financeiro em tempo real
+- ✅ Simulador de investimentos com cálculo de rendimentos
+- ✅ Recomendações personalizadas de produtos
+- ✅ Histórico de investimentos
+- ✅ Design responsivo (Mobile-first)
+- ✅ Seguindo Design System CAIXA
+
+## 🎨 Design System
+
+Projeto desenvolvido seguindo fielmente o **Design System CAIXA**, incluindo:
+- Paleta de cores 
+- Tipografia padronizada
+- Espaçamentos consistentes
+- Componentes reutilizáveis
+- Acessibilidade
+
+## 📋 Pré-requisitos
+
+- Node.js (versão 18 ou superior)
+- npm ou yarn
+
+## 🔧 Instalação
+
+1. Clone o repositório (ou extraia o ZIP)
+
+2. Instale as dependências:
+npm install
+
+text
+
+3. Execute o projeto:
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+text
 
-## Code scaffolding
+4. Acesse no navegador:
+http://localhost:4200
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-```bash
-ng generate component component-name
-```
+## 👤 Usuários de Teste
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Login Tradicional
+- **Email**: qualquer@email.com
+- **Senha**: qualquer senha com 6+ caracteres
 
-```bash
-ng generate --help
-```
+### Perfis de Teste (Acesso Rápido)
+- **Conservador** - Risco Baixo (Cliente ID: 3)
+- **Moderado** - Risco Médio (Cliente ID: 1)
+- **Agressivo** - Risco Alto (Cliente ID: 2)
 
-## Building
+## 📁 Estrutura do Projeto
 
-To build the project run:
+painel-investimentos/
+├── src/
+│ ├── app/
+│ │ ├── auth/ # Módulo de autenticação
+│ │ │ ├── login/
+│ │ │ └── profile-selector/
+│ │ ├── dashboard/ # Dashboard principal
+│ │ │ └── investiment-simulator/
+│ │ ├── interceptors/ # Mock API
+│ │ ├── models/ # Interfaces/Models
+│ │ └── services/ # Services
+│ ├── styles.scss # Estilos globais
+│ └── ...
+├── angular.json
+├── package.json
+└── README.md
 
-```bash
-ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 📱 Responsividade
 
-## Running unit tests
+O projeto é totalmente responsivo, adaptando-se perfeitamente a:
+- 📱 Mobile (< 600px)
+- 📱 Tablet (600px - 900px)
+- 💻 Desktop (> 900px)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 🎓 Desenvolvedor
 
-```bash
-ng test
-```
+**Bruno Favalli**
 
-## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
+## 📝 Licença
 
-```bash
-ng e2e
-```
+Este projeto foi desenvolvido como portfolio pessoal.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+💙🧡 Desenvolvido com Angular e seguindo o Design System CAIXA
