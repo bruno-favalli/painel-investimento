@@ -8,19 +8,13 @@ import { MatListModule } from '@angular/material/list';
 import {MatIconModule} from "@angular/material/icon";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
-
 import { ProfileService } from '../../services/profile.service';
 import { ProfileResponse } from '../../models/profile.model';
 import { InvestmentService } from '../../services/investment.service';
 import { Product } from '../../models/product.model';
 import { InvestmentHistory } from '../../models/investment-history.model';
 import { InvestimentSimulatorComponent } from '../investiment-simulator/investiment-simulator.component';
-
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-
-
-
-
 
 @Component({
   selector: 'app-dashboard',
@@ -46,13 +40,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public topProduct$!: Observable<Product | undefined>;
 
   view: [number, number] = [600, 350];
-  scheme: any = {domain: ['#005CA9',  // Primary 90 - Azul CAIXA
-  '#f39200',  // Secondary 70 - Laranja
-  '#54bbab',  // Tertiary 70 - Turquesa
-  '#00b4e6',  // Ceu 70
-  '#b26f9b',  // Uva 70
-  '#afca0b',  // Limão 70
-  '#f9b000',  // Tangerina 70
+  scheme: any = {domain: ['#005CA9', 
+  '#f39200',  
+  '#54bbab', 
+  '#00b4e6', 
+  '#b26f9b', 
+  '#afca0b',  
+  '#f9b000',  
   '#ef765e' ]};
 
   public displayedColumns: string[] = ['tipo', 'valor', 'data', 'rentabilidade'];
@@ -84,14 +78,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           map(products => products.length > 0 ? products[0] : undefined)
         );
 
-        // 3. NOVA BUSCA: Histórico de Investimentos
-        // Note que não depende do perfil, então chamamos direto usando o ID
+        // Histórico de Investimentos
         this.history$ = this.investmentService.getInvestmentHistory(idNumber);
 
         this.distributionData$ = this.history$.pipe(
-          // Map transforma o array de Histórico (InvestmentHistory[])
+          // Map transforma o array de Histórico 
           map(history => {
-            // Agrupamos os valores por tipo de investimento (CDB, Fundo, LCI...)
+            // valores por tipo de investimento (CDB, Fundo, LCI...)
             const grouped = history.reduce((acc, item) => {
               const key = item.tipo;
               // Acumula o valor total investido para cada tipo
@@ -123,13 +116,13 @@ calculatePercentage(value: number): string {
   return percentage.toFixed(1);
 }
 
-// ✅ Retorna a cor correspondente ao item
+//  Retorna a cor correspondente ao item
 getColorForItem(name: string): string {
   const index = this.chartData.findIndex(item => item.name === name);
   return this.scheme.domain[index % this.scheme.domain.length];
 }
 
-// ✅ Formata os labels no gráfico (para não cortar)
+//  Formata os labels no gráfico (para não cortar)
 labelFormatting = (label: string): string => {
   if (label.length > 15) {
     return label.substring(0, 12) + '...';
@@ -137,12 +130,12 @@ labelFormatting = (label: string): string => {
   return label;
 }
 
-// ✅ Formata a legenda com nome + valor + porcentagem
+//  Formata a legenda com nome + valor + porcentagem
 legendLabelFormatting = (label: string): string => {
   return label;
 }
 
-// ✅ Formata o valor na legenda (moeda brasileira)
+//  Formata o valor na legenda (moeda brasileira)
 valueFormatting = (value: number): string => {
   return value.toLocaleString('pt-BR', {
     style: 'currency',
@@ -150,7 +143,7 @@ valueFormatting = (value: number): string => {
   });
 }
 
-// ✅ Formata a porcentagem na legenda
+// Formata a porcentagem na legenda
 percentageFormatting = (value: number): string => {
   if (this.totalValue === 0) return '0%';
   const percentage = (value / this.totalValue) * 100;
@@ -163,7 +156,7 @@ onResize(container: HTMLElement): void {
     let width: number;
     let height: number;
 
-    // ✅ Ajustes específicos por tamanho de tela
+    //  Ajustes específicos por tamanho de tela
     if (screenWidth < 400) {
       // Telas muito pequenas
       width = Math.min(container.offsetWidth - 20, 320);
@@ -214,7 +207,7 @@ isSimulating = false;
   
   getRentabilidadeMedia(): number {
     // Calcula rentabilidade média baseada no histórico
-    return 0.0875; // 8,75% - Você pode calcular dinamicamente do seu histórico
+    return 0.0875; // 8,75% 
   }
   
   getMaiorInvestimento(): string {

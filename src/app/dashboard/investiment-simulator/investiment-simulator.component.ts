@@ -26,9 +26,9 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class InvestimentSimulatorComponent implements OnInit {
   simulatorForm!: FormGroup;
-  resultado: any = null; // ✅ Propriedade para armazenar o resultado
+  resultado: any = null; // armazenar o resultado
 
-  // ✅ Taxas de rentabilidade por tipo de investimento (exemplo)
+  // Taxas de rentabilidade por tipo de investimento (
   private taxas: { [key: string]: number } = {
     'CDB': 0.0095, // 0.95% ao mês
     'Tesouro Direto': 0.0075, // 0.75% ao mês
@@ -39,7 +39,7 @@ export class InvestimentSimulatorComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    // ✅ Inicializar formulário com validações
+    // Inicializar formulário com validações
     this.simulatorForm = this.formBuilder.group({
       valor: [1000, [Validators.required, Validators.min(100)]],
       prazo: [12, [Validators.required, Validators.min(1), Validators.max(360)]],
@@ -47,7 +47,7 @@ export class InvestimentSimulatorComponent implements OnInit {
     });
   }
 
-  // ✅ Função para simular o investimento
+  //  Função para simular o investimento
   simulate(): void {
     if (this.simulatorForm.valid) {
       const { valor, prazo, tipo } = this.simulatorForm.value;
@@ -79,7 +79,7 @@ export class InvestimentSimulatorComponent implements OnInit {
     }
   }
 
-  // ✅ Função para simular produto específico (chamada pelo dashboard)
+  // Função para simular produto específico (chamada pelo dashboard)
   simulateProduct(product: any): void {
     // Preenche o formulário com dados do produto
     this.simulatorForm.patchValue({

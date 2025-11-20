@@ -1,7 +1,6 @@
 import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs'; 
 import { delay } from 'rxjs/operators'; // simular uma demora da rede
-
 import { AuthResponse } from '../models/auth.model';
 import { ProfileResponse } from '../models/profile.model';
 import { Product } from '../models/product.model';
@@ -35,7 +34,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     // Usamos 'delay(500)' para simular 0.5 segundos de espera da rede
     return of(httpResponse).pipe(delay(500));
   }
-
+//  Simulação: Perfil de Risco do Cliente
   if (req.url.includes('/perfil-risco/') && req.method === 'GET') {
     
     const clientId = req.url.split('/perfil-risco/')[1];
@@ -97,6 +96,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     body: perfilData
   })).pipe(delay(300));
 }
+  //  Simulação: Produtos Recomendados
   if(req.url.includes('/produtos-recomendados/') && req.method === 'GET') {
     const perfil = req.url.split('/').pop();
     console.log(`INTERCEPTOR: Buscando produtos para o perfil: ${perfil}`);
@@ -137,7 +137,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     return of(httpResponse).pipe(delay(1200));
   }
 
-  // --- Simulação: Histórico de Investimentos ---
+  //  Simulação: Histórico de Investimentos 
 if (req.url.includes('/investimentos/') && req.method === 'GET') {
     
   const clientId = req.url.split('/investimentos/')[1];
@@ -227,7 +227,7 @@ if (req.url.includes('/investimentos/') && req.method === 'GET') {
   })).pipe(delay(300));
 }
 
-  // --- Simulação: Simulador de Investimento ---
+  //  Simulação: Simulador de Investimento 
 if (req.url.endsWith('/simular-investimento') && req.method === 'POST') {
     
     const requestData = req.body as SimulationRequest;

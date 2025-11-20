@@ -1,9 +1,4 @@
-/* ========================================
-   DASHBOARD - DESIGN SYSTEM CAIXA
-   Versão Completa e Otimizada
-   ======================================== */
 
-/* ====== CONTAINER PRINCIPAL ====== */
 .main-dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -12,7 +7,7 @@
     min-height: 100vh;
   }
   
-  /* ====== HEADER COM SAUDAÇÃO ====== */
+  /*  HEADER  */
   .greeting-bar {
     background: linear-gradient(135deg, var(--caixa-primary-90) 0%, var(--caixa-primary-70) 100%);
     padding: var(--spacing-xl) var(--spacing-lg);
@@ -76,7 +71,7 @@
     }
   }
   
-  /* ====== GRID PRINCIPAL (Gráfico + Destaque) ====== */
+  /* Gráfico + Destaque */
   .main-content-grid {
     display: grid;
     grid-template-columns: 1.8fr 1.2fr;
@@ -84,7 +79,7 @@
     margin-bottom: var(--spacing-3xl);
   }
   
-  /* ====== CARDS GERAIS ====== */
+  
   .chart-card, 
   .highlight-card {
     background: var(--caixa-white);
@@ -119,7 +114,7 @@
     }
   }
   
-  /* ====== CARD DO GRÁFICO ====== */
+ 
   .chart-card {
     min-width: 0;
     overflow: visible !important; // ✅ MUDANÇA CRÍTICA - permite que o gráfico não seja cortado
@@ -134,7 +129,7 @@
     }
   }
   
-  /* ====== WRAPPER DO GRÁFICO ====== */
+  
   
   .chart-wrapper {
     width: 100%;
@@ -431,21 +426,19 @@
       }
     }
   }
-  /* ====== CARD DE DESTAQUE (Produto Recomendado) ====== */
+  /* Produto Recomendado */
   .highlight-card {
     display: flex;
     flex-direction: column;
-
-    
     justify-content: space-between;
     background: linear-gradient(135deg, var(--caixa-white) 0%, var(--caixa-primary-10) 100%);
     border-left: 4px solid var(--caixa-secondary-70);
   
     mat-card-header {
-        width: 100%; // ✅ Header ocupa toda largura
+        width: 100%; 
         display: flex;
         flex-direction: column;
-        align-items: center; // ✅ Centraliza header
+        align-items: center; 
       }
     mat-card-title {
       font-size: 1rem;
@@ -517,7 +510,7 @@
     }
   }
   
-  /* ====== SEÇÕES DE CONTEÚDO ====== */
+ 
   .products-container,
   .history-container {
     max-width: 1200px;
@@ -542,7 +535,7 @@
     }
   }
   
-  /* ====== LISTA DE PRODUTOS ====== */
+  
   .products-container {
     mat-list {
       background: var(--caixa-white);
@@ -611,7 +604,7 @@
     }
   }
   
-  /* ====== TABELA DE HISTÓRICO ====== */
+  /* TABELA DE HISTÓRICO */
   .history-container {
     h2::before {
       content: '📈';
@@ -643,7 +636,7 @@
     }
   }
   
-  /* ====== LOADING/SPINNERS ====== */
+  
   .loading-spinner {
     display: flex;
     flex-direction: column;
@@ -670,7 +663,7 @@
     font-style: italic;
   }
   
-  /* ====== FALLBACK LOADING ====== */
+ 
   .fallback-loading {
     min-height: 100vh;
     display: flex;
@@ -686,7 +679,7 @@
     }
   }
   
-  /* ====== ANIMAÇÕES ====== */
+  /* ANIMAÇÕES  */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -705,9 +698,7 @@
     animation: fadeIn 0.5s ease-out;
   }
   
-  /* ========================================
-     RESPONSIVIDADE
-     ======================================== */
+  /*RESPONSIVIDADE*/
   
   /* Tablets e telas médias */
   @media (max-width: 900px) {

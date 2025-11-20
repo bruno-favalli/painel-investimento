@@ -1,6 +1,6 @@
 <div *ngIf="profile$ | async as profile" class="main-dashboard-container"> 
   
-    <!-- ====== HEADER COM SAUDAÇÃO ====== -->
+    <!--  HEADER  -->
     <div class="greeting-bar">
       <h1>Olá, {{ profile.nomeCliente }}! 👋</h1>
       <p class="risk-label">
@@ -9,10 +9,10 @@
       </p>
     </div>
   
-    <!-- ====== GRID PRINCIPAL (Gráfico + Resumo + Destaque) ====== -->
+    <!-- (Gráfico + Resumo + Destaque) -->
     <div class="main-content-grid">
   
-      <!-- ====== CARD DO GRÁFICO ====== -->
+      <!--  CARD DO GRAFICO  -->
       <mat-card class="chart-card">
         <mat-card-header>
           <mat-card-title>Distribuição de Ativos ({{ profile.perfil }})</mat-card-title>
@@ -54,7 +54,7 @@
         </mat-card-content>
       </mat-card>
   
-      <!-- ====== NOVO: CARD DE RESUMO FINANCEIRO ====== -->
+      <!--  CARD DE RESUMO FINANCEIRO  -->
       <mat-card class="summary-card" *ngIf="distributionData$ | async as chartData">
         <mat-card-header>
           <mat-card-title>💰 Resumo Financeiro</mat-card-title>
@@ -94,7 +94,7 @@
         </mat-card-content>
       </mat-card>
   
-      <!-- ====== CARD DE DESTAQUE (Produto Recomendado) ====== -->
+      <!--  Produto Recomendado  -->
       <mat-card class="highlight-card" *ngIf="topProduct$ | async as product; else loadingHighlight">
         <mat-card-header>
           <mat-card-title>Primeiro Investimento Sugerido</mat-card-title>
@@ -122,10 +122,10 @@
   
     </div>
   
-    <!-- ====== SIMULADOR DE INVESTIMENTOS ====== -->
+    <!--  SIMULADOR DE INVESTIMENTOS  -->
     <app-investiment-simulator></app-investiment-simulator>
   
-    <!-- ====== LISTA DE PRODUTOS RECOMENDADOS ====== -->
+    <!--  LISTA DE PRODUTOS RECOMENDADOS -->
     <div class="products-container" *ngIf="products$ | async as products; else loadingProducts">
       
       <h2>Outras Recomendações</h2>
@@ -149,7 +149,7 @@
       </mat-list>
     </div>
     
-    <!-- ====== TABELA DE HISTÓRICO DE INVESTIMENTOS ====== -->
+    <!-- TABELA DE HISTÓRICO DE INVESTIMENTOS -->
     <div class="history-container" *ngIf="history$ | async as history; else loadingHistory">
       
       <h2>Meus Investimentos</h2>
@@ -186,7 +186,7 @@
   
     </div>
   
-    <!-- ====== TEMPLATES DE LOADING ====== -->
+    <!--  TEMPLATES DE LOADING  -->
     
     <!-- Loading do Gráfico -->
     <ng-template #loadingChart>
@@ -214,7 +214,7 @@
   
   </div>
   
-  <!-- ====== FALLBACK LOADING (Quando profile$ está carregando) ====== -->
+  <!-- Quando profile$ está carregando -->
   <div *ngIf="!(profile$ | async)" class="main-dashboard-container fallback-loading">
     <div class="loading-spinner">
       <mat-spinner diameter="50"></mat-spinner>

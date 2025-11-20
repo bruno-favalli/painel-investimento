@@ -1,7 +1,3 @@
-/* ========================================
-   DESIGN SYSTEM CAIXA - Variáveis CSS
-   ======================================== */
-
    :root {
     /* ====== PALETA FIXA - AZUL (Primary) ====== */
     --caixa-primary-130: #002A4D;
@@ -126,18 +122,15 @@
     letter-spacing: 0.5px !important;
   }
   
-  /* Botão Primary (Azul CAIXA) */
+  /* Botão Primary (Azul) */
   .mat-primary {
     --mdc-filled-button-container-color: var(--caixa-primary-90) !important;
   }
   
-  /* Botão Accent (Laranja CAIXA) */
+  /* Botão Accent (Laranja) */
   .mat-accent {
     --mdc-filled-button-container-color: var(--caixa-secondary-90) !important;
   }
-  /* ========================================
-   CUSTOMIZAÇÃO DOS BOTÕES - DESIGN SYSTEM CAIXA
-   ======================================== */
 
 // Botões Filled (Primary e Accent)
 .mat-mdc-raised-button,
@@ -154,7 +147,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
-  line-height: 1 !important; // ✅ IMPORTANTE para alinhamento vertical
+  line-height: 1 !important; 
 
   .mdc-button__label,
   .mat-button-wrapper {
@@ -200,7 +193,7 @@
   }
 }
 
-// Botão Primary (Azul CAIXA)
+// Botão Primary (Azul)
 .mat-mdc-raised-button.mat-primary,
 .mat-mdc-unelevated-button.mat-primary,
 .mat-mdc-flat-button.mat-primary {
@@ -216,7 +209,7 @@
   }
 }
 
-// Botão Accent (Laranja CAIXA)
+// Botão Accent (Laranja)
 .mat-mdc-raised-button.mat-accent,
 .mat-mdc-unelevated-button.mat-accent,
 .mat-mdc-flat-button.mat-accent {

@@ -1,8 +1,4 @@
-/* ========================================
-   SIMULADOR - DESIGN SYSTEM CAIXA
-   ======================================== */
-
-   .simulator-card {
+  .simulator-card {
     max-width: 1200px;
     margin: var(--spacing-2xl) auto;
     background: var(--caixa-white);
@@ -17,7 +13,7 @@
     }
   }
   
-  // ✅ Header do Simulador
+  // Header do Simulador
   .simulator-header {
     margin-bottom: var(--spacing-xl);
     border-bottom: 2px solid var(--caixa-primary-90);
@@ -45,7 +41,7 @@
     }
   }
   
-  // ✅ Formulário do Simulador
+  // Formulário do Simulador
   .simulator-form {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -56,7 +52,7 @@
     mat-form-field {
       width: 100%;
   
-      // ✅ Estilo dos campos
+      // Estilo dos campos
       ::ng-deep {
         .mat-mdc-text-field-wrapper {
           background-color: var(--caixa-greyscale-10);
@@ -85,7 +81,7 @@
       }
     }
   
-    // ✅ Botão Simular
+    // Botão Simular
     button {
       min-height: 56px !important;
       font-size: 1.1rem !important;
@@ -124,7 +120,7 @@
     }
   }
   
-  // ✅ Container do Resultado
+  // Container do Resultado
   .result-container {
     margin-top: var(--spacing-2xl);
     padding: var(--spacing-2xl);
@@ -167,7 +163,7 @@
     }
   }
   
-  // ✅ Animação
+  // Animação
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -179,7 +175,7 @@
     }
   }
   
-  // ✅ RESPONSIVIDADE
+  // RESPONSIVIDADE
   @media (max-width: 900px) {
     .simulator-card {
       margin: var(--spacing-xl) var(--spacing-md);
