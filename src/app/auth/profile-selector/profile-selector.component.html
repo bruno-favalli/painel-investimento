@@ -1,37 +1,68 @@
-<div class="split-container">
-
-    <div class="column login-column">
-      <mat-card class="login-card">
-        <mat-card-header>
-          <mat-card-title>Login Tradicional</mat-card-title>
-          <mat-card-subtitle>Acesso via formulário (ambiente real)</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <app-login></app-login>
-        </mat-card-content>
-      </mat-card>
+<div class="profile-selection-container">
+  
+    <!-- Badge de Ambiente -->
+    <div class="environment-badge">
+      Acesso rápido para demonstração
     </div>
   
-    <div class="column selector-column">
-      <mat-card class="selector-card">
-        <mat-card-header>
-          <mat-card-title>Ou selecione um Perfil de Teste</mat-card-title>
-          <mat-card-subtitle>Acesso rápido para demonstração</mat-card-subtitle>
-        </mat-card-header>
+    <!-- Card Principal -->
+    <mat-card class="profile-selection-card">
+      
+      <!-- Header -->
+      <div class="profile-header">
+        <h1>Ou selecione um Perfil de Teste</h1>
+        <p>Acesso rápido para demonstração</p>
+      </div>
   
-        <mat-card-content class="profile-grid">
-          <div *ngFor="let perfil of perfisDeTeste" class="profile-item">
-            <h3>{{ perfil.nome }}</h3>
-            <p>Risco: <strong>{{ perfil.risco }}</strong></p>
-            
-            <button mat-flat-button 
-                    color="primary" 
-                    (click)="selecionarPerfil(perfil.id)">
-              Acessar
-            </button>
+      <!-- Grid de Perfis -->
+      <div class="profiles-grid">
+        
+        <!-- Perfil Conservador -->
+        <div class="profile-card conservador" (click)="selectProfile('Conservador')">
+          <h2 class="profile-title">Conservador</h2>
+          <p class="profile-subtitle">(Padrão)</p>
+          
+          <div class="risk-info">
+            <div class="risk-label">Risco:</div>
+            <div class="risk-value">Baixo</div>
           </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  
+          <button mat-flat-button class="profile-button">
+            Acessar
+          </button>
+        </div>
+  
+        <!-- Perfil Moderado -->
+        <div class="profile-card moderado" (click)="selectProfile('Moderado')">
+          <h2 class="profile-title">Moderado (Padrão)</h2>
+          
+          <div class="risk-info">
+            <div class="risk-label">Risco:</div>
+            <div class="risk-value">Moderado</div>
+          </div>
+  
+          <button mat-flat-button class="profile-button">
+            Acessar
+          </button>
+        </div>
+  
+        <!-- Perfil Agressivo -->
+        <div class="profile-card agressivo" (click)="selectProfile('Agressivo')">
+          <h2 class="profile-title">Agressivo</h2>
+          
+          <div class="risk-info">
+            <div class="risk-label">Risco:</div>
+            <div class="risk-value">Alto</div>
+          </div>
+  
+          <button mat-flat-button class="profile-button">
+            Acessar
+          </button>
+        </div>
+  
+      </div>
+  
+    </mat-card>
   
   </div>
+  

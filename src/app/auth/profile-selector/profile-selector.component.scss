@@ -1,72 +1,343 @@
-.split-container {
+/* ========================================
+   SELEÇÃO DE PERFIL - DESIGN SYSTEM CAIXA
+   ======================================== */
+
+   .profile-selection-container {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start; 
-    gap: 40px;
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 0 20px;
+    align-items: center;
+    background: linear-gradient(135deg, var(--caixa-primary-90) 0%, var(--caixa-primary-70) 30%, var(--caixa-tertiary-70) 100%);
+    padding: var(--spacing-lg);
+    position: relative;
+    overflow: hidden;
+  
+    // ✅ Efeitos decorativos de fundo
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+  
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(243, 146, 0, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
   }
   
-  .column {
-    flex: 1;
-    min-width: 300px; /* Largura mínima ajustada */
+  // ✅ Card Principal
+  .profile-selection-card {
+    width: 100%;
+    max-width: 900px;
+    background: var(--caixa-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--caixa-shadow-xl);
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.5s ease-out;
+  
+    &.mat-mdc-card {
+      padding: var(--spacing-2xl) var(--spacing-xl) !important;
+    }
   }
   
-  .login-card, .selector-card {
-      padding: 20px;
-      height: 100%; 
-  }
+  // ✅ Header
+  .profile-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
   
-  /* Garante que o componente de login aninhado não tenha margens duplicadas */
-  .login-column ::ng-deep .simulator-card {
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--caixa-primary-90);
+      margin: 0 0 var(--spacing-xs) 0;
+    }
+  
+    p {
+      font-size: 0.95rem;
+      color: var(--caixa-greyscale-90);
       margin: 0;
-      box-shadow: none; 
+      font-weight: 400;
+    }
   }
   
-  .profile-grid {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 15px;
-    margin-top: 15px;
-    padding: 0;
+  // ✅ Grid de Cards de Perfil
+  .profiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+  }
   
-    .profile-item {
-      flex: 1 1 calc(50% - 15px); 
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      text-align: center;
-      transition: transform 0.2s;
+  // ✅ Card Individual de Perfil
+  .profile-card {
+    background: var(--caixa-white);
+    border: 2px solid var(--caixa-greyscale-30);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
   
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent 0%, transparent 100%);
+      transition: all 0.3s ease;
+    }
+  
+    &:hover {
+      border-color: var(--caixa-primary-70);
+      box-shadow: var(--caixa-shadow-lg);
+      transform: translateY(-4px);
+  
+      &::before {
+        background: linear-gradient(90deg, var(--caixa-primary-90) 0%, var(--caixa-secondary-70) 100%);
+      }
+    }
+  
+    // ✅ Variações por perfil
+    &.conservador {
       &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-color: var(--caixa-positive-70);
+        
+        &::before {
+          background: var(--caixa-positive-70);
+        }
       }
+    }
   
-      h3 {
-        font-size: 1.1em;
-        margin-top: 0;
-        color: #005CA9; 
+    &.moderado {
+      &:hover {
+        border-color: var(--caixa-attention-70);
+        
+        &::before {
+          background: var(--caixa-attention-70);
+        }
       }
+    }
+  
+    &.agressivo {
+      &:hover {
+        border-color: var(--caixa-negative-70);
+        
+        &::before {
+          background: var(--caixa-negative-70);
+        }
+      }
+    }
+  }
+  
+  // ✅ Título do Perfil
+  .profile-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--caixa-primary-90);
+    margin: 0 0 var(--spacing-xs) 0;
+  
+    .profile-card.conservador & {
+      color: var(--caixa-positive-90);
+    }
+  
+    .profile-card.moderado & {
+      color: var(--caixa-attention-90);
+    }
+  
+    .profile-card.agressivo & {
+      color: var(--caixa-negative-90);
+    }
+  }
+  
+  // ✅ Subtítulo (Padrão)
+  .profile-subtitle {
+    font-size: 0.85rem;
+    color: var(--caixa-greyscale-70);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+  }
+  
+  // ✅ Info de Risco
+  .risk-info {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-sm);
+    background: var(--caixa-greyscale-10);
+    border-radius: var(--border-radius-sm);
+  
+    .risk-label {
+      font-size: 0.8rem;
+      color: var(--caixa-greyscale-90);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+  
+    .risk-value {
+      font-size: 1.1rem;
+      font-weight: 700;
       
-      button {
-          margin-top: 10px;
+      .profile-card.conservador & {
+        color: var(--caixa-positive-90);
+      }
+  
+      .profile-card.moderado & {
+        color: var(--caixa-attention-90);
+      }
+  
+      .profile-card.agressivo & {
+        color: var(--caixa-negative-90);
       }
     }
   }
   
-  /* ➡️ RESPONSIVIDADE: Empilha colunas e ajusta grid em mobile */
-  @media (max-width: 800px) {
-    .split-container {
-      flex-direction: column; 
-      align-items: stretch;
-      gap: 20px;
+  // ✅ Botão Acessar
+  .profile-button {
+    width: 100%;
+    min-height: 44px !important;
+    margin-top: var(--spacing-md) !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+  
+    .profile-card.conservador & {
+      background-color: var(--caixa-positive-70) !important;
+      color: var(--caixa-white) !important;
+  
+      &:hover:not(:disabled) {
+        background-color: var(--caixa-positive-90) !important;
+        box-shadow: var(--caixa-shadow-md) !important;
+      }
     }
-    
-    .profile-grid {
-      .profile-item {
-          flex: 1 1 100%; /* Uma coluna de perfil em telas menores */
+  
+    .profile-card.moderado & {
+      background-color: var(--caixa-attention-70) !important;
+      color: var(--caixa-greyscale-130) !important;
+  
+      &:hover:not(:disabled) {
+        background-color: var(--caixa-attention-90) !important;
+        box-shadow: var(--caixa-shadow-md) !important;
+      }
+    }
+  
+    .profile-card.agressivo & {
+      background-color: var(--caixa-negative-70) !important;
+      color: var(--caixa-white) !important;
+  
+      &:hover:not(:disabled) {
+        background-color: var(--caixa-negative-90) !important;
+        box-shadow: var(--caixa-shadow-md) !important;
       }
     }
   }
+  
+  // ✅ Badge de Ambiente
+  .environment-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--caixa-greyscale-110);
+    box-shadow: var(--caixa-shadow-sm);
+    z-index: 2;
+  }
+  
+  // ✅ Animação de entrada
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  // ✅ RESPONSIVIDADE
+  @media (max-width: 900px) {
+    .profiles-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--spacing-md);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .profile-selection-container {
+      padding: var(--spacing-md);
+    }
+  
+    .profile-selection-card {
+      padding: var(--spacing-xl) var(--spacing-md) !important;
+  
+      &.mat-mdc-card {
+        padding: var(--spacing-xl) var(--spacing-md) !important;
+      }
+    }
+  
+    .profile-header {
+      margin-bottom: var(--spacing-lg);
+  
+      h1 {
+        font-size: 1.5rem;
+      }
+  
+      p {
+        font-size: 0.875rem;
+      }
+    }
+  
+    .profiles-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+  
+    .profile-card {
+      padding: var(--spacing-md);
+    }
+  
+    .profile-title {
+      font-size: 1.25rem;
+    }
+  
+    .environment-badge {
+      top: var(--spacing-sm);
+      left: var(--spacing-sm);
+      font-size: 0.7rem;
+      padding: 4px 10px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .profile-selection-card {
+      padding: var(--spacing-lg) var(--spacing-sm) !important;
+    }
+  
+    .profile-header h1 {
+      font-size: 1.25rem;
+    }
+  
+    .profile-title {
+      font-size: 1.1rem;
+    }
+  }
+  

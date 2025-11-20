@@ -1,16 +1,386 @@
 // src/app/auth/login/login.component.scss
-.login-container {
+/* ========================================
+   LOGIN - DESIGN SYSTEM CAIXA
+   ======================================== */
+/* ========================================
+   WRAPPER PRINCIPAL - LAYOUT LADO A LADO
+   ======================================== */
+
+   .login-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--caixa-primary-90) 0%, var(--caixa-primary-70) 30%, var(--caixa-tertiary-70) 100%);
+    padding: var(--spacing-xl);
+    position: relative;
+    overflow: hidden;
+  
+    // ✅ Efeitos decorativos de fundo
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+  
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(243, 146, 0, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+  }
+  
+  // ✅ Grid com duas colunas (lado a lado)
+  .login-grid {
+    width: 100%;
+    max-width: 1400px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; // ✅ Duas colunas iguais
+    gap: var(--spacing-xl);
+    position: relative;
+    z-index: 1;
+  }
+  
+  // ✅ Seções individuais
+  .login-section,
+  .profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  
+    // ✅ Remover container duplicado do profile-selection
+    ::ng-deep app-profile-selection {
+      width: 100%;
+      max-width: 600px;
+  
+      .profile-selection-container {
+        min-height: auto !important;
+        padding: 0 !important;
+        background: transparent !important;
+  
+        &::before,
+        &::after {
+          display: none !important;
+        }
+      }
+  
+      .environment-badge {
+        display: none !important;
+      }
+    }
+  }
+  
+  // ✅ Badge de ambiente centralizado
+  .environment-badge {
+    position: absolute;
+    top: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--border-radius-md);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--caixa-primary-90);
+    box-shadow: var(--caixa-shadow-lg);
+    z-index: 10;
+  }
+  
+  // ✅ RESPONSIVIDADE
+  @media (max-width: 1200px) {
+    .login-grid {
+      grid-template-columns: 1fr; // ✅ Uma coluna em telas menores
+      gap: var(--spacing-lg);
+      max-width: 600px;
+    }
+  
+    .environment-badge {
+      font-size: 0.8rem;
+      padding: 6px 16px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .login-page-wrapper {
+      padding: var(--spacing-md);
+    }
+  
+    .login-grid {
+      gap: var(--spacing-md);
+    }
+  
+    .environment-badge {
+      top: var(--spacing-md);
+      font-size: 0.75rem;
+      padding: 6px 12px;
+    }
+  }
+  
+  /* ========================================
+     RESTANTE DO SEU CSS (mantenha como está)
+     ======================================== */
+  
+  // ... todo o resto do seu CSS atual do login-card, login-form, etc.
+  
+   .login-container {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh; 
+    background: linear-gradient(135deg, var(--caixa-primary-90) 0%, var(--caixa-primary-70) 30%, var(--caixa-tertiary-70) 100%);
+    padding: var(--spacing-md);
+    position: relative;
+    overflow: hidden;
   
-    mat-card {
-      width: 100%;
-      max-width: 400px; 
+    // ✅ Efeitos decorativos de fundo
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
     }
   
-    mat-form-field {
-      width: 100%; 
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(243, 146, 0, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
     }
   }
+  
+  // ✅ Card de Login
+  .login-card {
+    width: 100%;
+    max-width: 450px;
+    background: var(--caixa-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--caixa-shadow-xl);
+    padding: var(--spacing-2xl) var(--spacing-lg); // ✅ Padding reduzido
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.5s ease-out;
+  
+    // ✅ Remover padding extra do mat-card
+    &.mat-mdc-card {
+      padding: var(--spacing-2xl) var(--spacing-lg) !important;
+    }
+  }
+  
+  // ✅ Header do Login
+  .login-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg); // ✅ Espaço reduzido (era muito grande)
+  
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--caixa-primary-90);
+      margin: 0 0 var(--spacing-xs) 0; // ✅ Margem reduzida
+    }
+  
+    p {
+      font-size: 0.95rem;
+      color: var(--caixa-greyscale-90);
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+  
+  // ✅ Formulário
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md); // ✅ Espaço consistente entre campos
+  
+    // ✅ Campos de entrada
+    mat-form-field {
+      width: 100%;
+  
+      .mat-mdc-form-field-infix {
+        min-height: 48px;
+      }
+  
+      input {
+        font-size: 1rem;
+        padding: 12px 0;
+      }
+  
+      mat-label {
+        font-weight: 500;
+        color: var(--caixa-greyscale-110);
+      }
+  
+      // ✅ Estilo de foco
+      &.mat-focused {
+        .mat-mdc-form-field-infix {
+          border-color: var(--caixa-primary-90);
+        }
+      }
+    }
+  }
+  
+  // ✅ Botão de Login
+  .login-button {
+    width: 100%;
+    min-height: 50px !important;
+    margin-top: var(--spacing-sm) !important; // ✅ Margem reduzida
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    background: linear-gradient(135deg, var(--caixa-secondary-70) 0%, var(--caixa-secondary-90) 100%) !important;
+    color: var(--caixa-white) !important;
+    box-shadow: var(--caixa-shadow-md) !important;
+    transition: all 0.3s ease !important;
+  
+    &:hover:not(:disabled) {
+      box-shadow: var(--caixa-shadow-lg) !important;
+      transform: translateY(-2px);
+    }
+  
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+  
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+  
+  // ✅ Link "Esqueceu a senha?"
+  .forgot-password {
+    text-align: center;
+    margin-top: var(--spacing-sm); // ✅ Margem reduzida
+  
+    a {
+      color: var(--caixa-primary-90);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+  
+      &:hover {
+        color: var(--caixa-primary-110);
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  // ✅ Footer informativo
+  .login-footer {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--caixa-greyscale-30);
+  
+    p {
+      font-size: 0.85rem;
+      color: var(--caixa-greyscale-70);
+      margin: 0;
+    }
+  }
+  
+  // ✅ Ambiente (Desenvolvimento/Produção)
+  .environment-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--caixa-greyscale-110);
+    box-shadow: var(--caixa-shadow-sm);
+    z-index: 2;
+  }
+  
+  // ✅ Animação de entrada
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  // ✅ RESPONSIVIDADE
+  @media (max-width: 600px) {
+    .login-container {
+      padding: var(--spacing-sm);
+    }
+  
+    .login-card {
+      max-width: 100%;
+      padding: var(--spacing-xl) var(--spacing-md) !important; // ✅ Padding ainda menor em mobile
+  
+      &.mat-mdc-card {
+        padding: var(--spacing-xl) var(--spacing-md) !important;
+      }
+    }
+  
+    .login-header {
+      margin-bottom: var(--spacing-md); // ✅ Margem reduzida em mobile
+  
+      h1 {
+        font-size: 1.5rem;
+      }
+  
+      p {
+        font-size: 0.875rem;
+      }
+    }
+  
+    .login-form {
+      gap: var(--spacing-sm); // ✅ Gap menor em mobile
+    }
+  
+    .login-button {
+      min-height: 48px !important;
+      font-size: 1rem !important;
+    }
+  
+    .environment-badge {
+      top: var(--spacing-sm);
+      left: var(--spacing-sm);
+      font-size: 0.7rem;
+      padding: 4px 10px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .login-card {
+      padding: var(--spacing-lg) var(--spacing-sm) !important; // ✅ Mínimo em telas pequenas
+    }
+  
+    .login-header {
+      margin-bottom: var(--spacing-sm);
+  
+      h1 {
+        font-size: 1.25rem;
+      }
+    }
+  }
+  
