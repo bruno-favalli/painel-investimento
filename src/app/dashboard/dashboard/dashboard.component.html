@@ -1,0 +1,185 @@
+<div *ngIf="profile$ | async as profile" class="main-dashboard-container"> 
+  
+    <!-- ====== HEADER COM SAUDAÇÃO ====== -->
+    <div class="greeting-bar">
+      <h1>Olá, {{ profile.nomeCliente }}! 👋</h1>
+      <p class="risk-label">
+        Seu perfil de risco é: 
+        <strong [class]="profile.perfil.toLowerCase()">{{ profile.perfil }}</strong>
+      </p>
+    </div>
+  
+    <!-- ====== GRID PRINCIPAL (Gráfico + Destaque) ====== -->
+    <div class="main-content-grid">
+  
+      <!-- ====== CARD DO GRÁFICO ====== -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Distribuição de Ativos ({{ profile.perfil }})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="distributionData$ | async as chartData; else loadingChart" 
+               class="chart-wrapper" 
+               #chartContainer>
+            <!-- ✅ ADVANCED PIE CHART com formatação personalizada -->
+            <ngx-charts-pie-chart
+        [view]="view"
+        [scheme]="scheme"
+        [results]="chartData"
+        [legend]="true"
+       
+        [legendTitle]="'Investimentos'"
+        [labels]="true"
+        [doughnut]="true"
+        [arcWidth]="0.35"
+        [animations]="true"
+        [trimLabels]="false"
+        [maxLabelLength]="20"
+        (window:resize)="onResize(chartContainer)">
+      </ngx-charts-pie-chart>
+       <!-- ✅ Legenda customizada com porcentagens -->
+       <div class="custom-legend" *ngIf="chartData && chartData.length > 0">
+        <div class="legend-item" *ngFor="let item of chartData">
+          <div class="legend-color" [style.background-color]="getColorForItem(item.name)"></div>
+          <div class="legend-info">
+            <div class="legend-name">{{ item.name }}</div>
+            <div class="legend-stats">
+              <span class="legend-value">{{ item.value | currency:'BRL' }}</span>
+              <span class="legend-percent">{{ calculatePercentage(item.value) }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- ====== CARD DE DESTAQUE (Produto Recomendado) ====== -->
+      <mat-card class="highlight-card" *ngIf="topProduct$ | async as product; else loadingHighlight">
+        <mat-card-header>
+          <mat-card-title>Primeiro Investimento Sugerido</mat-card-title>
+          <mat-card-subtitle>{{ profile.perfil }} - Risco: {{ product.risco }}</mat-card-subtitle> 
+        </mat-card-header>
+        <mat-card-content>
+          <h2>{{ product.nome }}</h2>
+          <p>Tipo: <strong>{{ product.tipo }}</strong></p>
+          <p>Rentabilidade Estimada: <strong>{{ product.rentabilidade | percent:'1.2-2' }}</strong></p>
+          <button mat-flat-button 
+                  color="accent" 
+                  (click)="simulator.simulateProduct(product)">
+            <mat-icon>trending_up</mat-icon>
+            Simular Agora
+          </button>
+        </mat-card-content>
+      </mat-card>
+      
+      <!-- Template de Loading para Card de Destaque -->
+      <ng-template #loadingHighlight>
+        <mat-card class="highlight-card">
+          <p class="loading-text">Buscando sugestão...</p>
+        </mat-card>
+      </ng-template>
+  
+    </div>
+  
+    <!-- ====== SIMULADOR DE INVESTIMENTOS ====== -->
+    <app-investiment-simulator></app-investiment-simulator>
+  
+    <!-- ====== LISTA DE PRODUTOS RECOMENDADOS ====== -->
+    <div class="products-container" *ngIf="products$ | async as products; else loadingProducts">
+      
+      <h2>Outras Recomendações</h2>
+  
+      <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let product of products">
+          <mat-icon matListItemIcon>show_chart</mat-icon>
+          <div matListItemTitle>{{ product.nome }} ({{ product.tipo }})</div>
+          <div matListItemLine>
+            Risco: {{ product.risco }} | 
+            Rentabilidade: {{ product.rentabilidade | percent:'1.2-2' }}
+          </div>
+          <button mat-flat-button 
+                  color="primary" 
+                  matListItemMeta
+                  (click)="simulator.simulateProduct(product)">
+            <mat-icon>calculate</mat-icon>
+            Simular
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    
+    <!-- ====== TABELA DE HISTÓRICO DE INVESTIMENTOS ====== -->
+    <div class="history-container" *ngIf="history$ | async as history; else loadingHistory">
+      
+      <h2>Meus Investimentos</h2>
+  
+      <table mat-table [dataSource]="history" class="mat-elevation-z2">
+  
+        <!-- Coluna Tipo -->
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef> Tipo </th>
+          <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+        </ng-container>
+  
+        <!-- Coluna Valor -->
+        <ng-container matColumnDef="valor">
+          <th mat-header-cell *matHeaderCellDef> Valor </th>
+          <td mat-cell *matCellDef="let element"> {{element.valor | currency:'BRL'}} </td>
+        </ng-container>
+  
+        <!-- Coluna Data -->
+        <ng-container matColumnDef="data">
+          <th mat-header-cell *matHeaderCellDef> Data </th>
+          <td mat-cell *matCellDef="let element"> {{element.data | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+  
+        <!-- Coluna Rentabilidade -->
+        <ng-container matColumnDef="rentabilidade">
+          <th mat-header-cell *matHeaderCellDef> Rentabilidade </th>
+          <td mat-cell *matCellDef="let element"> {{element.rentabilidade | percent}} </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  
+    </div>
+  
+    <!-- ====== TEMPLATES DE LOADING ====== -->
+    
+    <!-- Loading do Gráfico -->
+    <ng-template #loadingChart>
+      <div class="loading-spinner">
+        <mat-spinner diameter="30"></mat-spinner>
+        <p>Calculando distribuição...</p>
+      </div>
+    </ng-template>
+  
+    <!-- Loading dos Produtos -->
+    <ng-template #loadingProducts>
+      <div class="loading-spinner">
+        <mat-spinner diameter="30"></mat-spinner>
+        <p>Carregando recomendações...</p>
+      </div>
+    </ng-template>
+  
+    <!-- Loading do Histórico -->
+    <ng-template #loadingHistory>
+      <div class="loading-spinner">
+        <mat-spinner diameter="30"></mat-spinner>
+        <p>Carregando histórico...</p>
+      </div>
+    </ng-template>
+  
+  </div>
+  
+  <!-- ====== FALLBACK LOADING (Quando profile$ está carregando) ====== -->
+  <div *ngIf="!(profile$ | async)" class="main-dashboard-container fallback-loading">
+    <div class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+      <h1>Carregando Dashboard...</h1>
+    </div>
+  </div>
+  
+  

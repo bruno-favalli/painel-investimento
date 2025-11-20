@@ -1,0 +1,72 @@
+.split-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    gap: 40px;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+  }
+  
+  .column {
+    flex: 1;
+    min-width: 300px; /* Largura mínima ajustada */
+  }
+  
+  .login-card, .selector-card {
+      padding: 20px;
+      height: 100%; 
+  }
+  
+  /* Garante que o componente de login aninhado não tenha margens duplicadas */
+  .login-column ::ng-deep .simulator-card {
+      margin: 0;
+      box-shadow: none; 
+  }
+  
+  .profile-grid {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px;
+    margin-top: 15px;
+    padding: 0;
+  
+    .profile-item {
+      flex: 1 1 calc(50% - 15px); 
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.2s;
+  
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+  
+      h3 {
+        font-size: 1.1em;
+        margin-top: 0;
+        color: #005CA9; 
+      }
+      
+      button {
+          margin-top: 10px;
+      }
+    }
+  }
+  
+  /* ➡️ RESPONSIVIDADE: Empilha colunas e ajusta grid em mobile */
+  @media (max-width: 800px) {
+    .split-container {
+      flex-direction: column; 
+      align-items: stretch;
+      gap: 20px;
+    }
+    
+    .profile-grid {
+      .profile-item {
+          flex: 1 1 100%; /* Uma coluna de perfil em telas menores */
+      }
+    }
+  }

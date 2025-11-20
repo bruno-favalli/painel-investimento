@@ -1,0 +1,45 @@
+<mat-card class="simulator-card">
+    <mat-card-header>
+      <mat-card-title>Simulador de Investimentos</mat-card-title>
+      <mat-card-subtitle>Faça uma simulação e veja seu dinheiro render</mat-card-subtitle>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <form [formGroup]="simulationForm" (ngSubmit)="onSimulate()" class="simulator-form">
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Valor a Investir (R$)</mat-label>
+          <input matInput type="number" formControlName="valor">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Prazo (Meses)</mat-label>
+          <input matInput type="number" formControlName="prazoMeses">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de Investimento</mat-label>
+          <mat-select formControlName="tipo">
+            <mat-option *ngFor="let tipo of tiposInvestimento" [value]="tipo">
+              {{ tipo }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <button mat-flat-button color="primary" type="submit" [disabled]="simulationForm.invalid">
+          Simular Rendimento
+        </button>
+  
+      </form>
+  
+      <div class="result-container" *ngIf="simulationResult$ | async as result">
+        <div class="result-box">
+          <h3>Resultado da Simulação</h3>
+          <p class="valor-final">{{ result.valorFinal | currency:'BRL' }}</p>
+          <p class="detalhes">{{ result.detalhes }}</p>
+          <small>Rentabilidade estimada: {{ result.rentabilidade | percent:'1.2-2' }} ao ano</small>
+        </div>
+      </div>
+  
+    </mat-card-content>
+  </mat-card>

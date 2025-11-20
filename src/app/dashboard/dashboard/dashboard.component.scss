@@ -1,0 +1,845 @@
+/* ========================================
+   DASHBOARD - DESIGN SYSTEM CAIXA
+   Versão Completa e Otimizada
+   ======================================== */
+
+/* ====== CONTAINER PRINCIPAL ====== */
+.main-dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-md);
+    background: linear-gradient(180deg, var(--caixa-greyscale-10) 0%, var(--caixa-white) 100%);
+    min-height: 100vh;
+  }
+  
+  /* ====== HEADER COM SAUDAÇÃO ====== */
+  .greeting-bar {
+    background: linear-gradient(135deg, var(--caixa-primary-90) 0%, var(--caixa-primary-70) 100%);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--caixa-shadow-lg);
+    color: var(--caixa-white);
+    position: relative;
+    overflow: hidden;
+  
+    /* Efeito decorativo de fundo */
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+  
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 var(--spacing-sm) 0;
+      position: relative;
+      z-index: 1;
+    }
+  
+    .risk-label {
+      font-size: 1.1rem;
+      font-weight: 400;
+      opacity: 0.95;
+      position: relative;
+      z-index: 1;
+  
+      strong {
+        padding: 6px 16px;
+        border-radius: var(--border-radius-md);
+        font-weight: 600;
+        display: inline-block;
+        margin-left: var(--spacing-sm);
+        box-shadow: var(--caixa-shadow-sm);
+        
+        &.conservador {
+          background-color: var(--caixa-positive-50);
+          color: var(--caixa-positive-90);
+        }
+        
+        &.moderado {
+          background-color: var(--caixa-attention-50);
+          color: var(--caixa-attention-90);
+        }
+        
+        &.agressivo {
+          background-color: var(--caixa-negative-50);
+          color: var(--caixa-negative-90);
+        }
+      }
+    }
+  }
+  
+  /* ====== GRID PRINCIPAL (Gráfico + Destaque) ====== */
+  .main-content-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1.2fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-3xl);
+  }
+  
+  /* ====== CARDS GERAIS ====== */
+  .chart-card, 
+  .highlight-card {
+    background: var(--caixa-white);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--caixa-shadow-md);
+    transition: all 0.3s ease;
+    overflow: hidden;
+  
+    &:hover {
+      box-shadow: var(--caixa-shadow-lg);
+      transform: translateY(-2px);
+    }
+  
+    mat-card-header {
+      margin-bottom: var(--spacing-md);
+    }
+  
+    mat-card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--caixa-primary-90);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+  
+      /* Ícone decorativo */
+      &::before {
+        content: '📊';
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
+  /* ====== CARD DO GRÁFICO ====== */
+  .chart-card {
+    min-width: 0;
+    overflow: visible !important; // ✅ MUDANÇA CRÍTICA - permite que o gráfico não seja cortado
+  
+    mat-card-title::before {
+      content: '📊';
+    }
+  
+    mat-card-content {
+      overflow: visible !important; // ✅ MUDANÇA CRÍTICA
+      padding: 0 !important; // ✅ Remove padding que causa problemas
+    }
+  }
+  
+  /* ====== WRAPPER DO GRÁFICO ====== */
+  
+  .chart-wrapper {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: var(--spacing-md);
+    box-sizing: border-box;
+    overflow: visible !important; // ✅ MUDANÇA CRÍTICA
+    
+    // ✅ PIE CHART NORMAL
+    ::ng-deep ngx-charts-pie-chart {
+      display: block;
+      width: 100% !important;
+      max-width: 600px !important;
+      margin: 0 auto;
+      overflow: visible !important; // ✅ Permite que elementos excedam os limites
+      
+      svg {
+        max-width: 100% !important;
+        height: auto !important;
+        overflow: visible !important; // ✅ CRÍTICO para não cortar
+      }
+  
+      // ✅ Esconde a legenda padrão (vamos usar custom)
+      .chart-legend {
+        display: none !important;
+      }
+  
+      // ✅ Labels nas fatias
+      .pie-label {
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        fill: var(--caixa-white) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+      }
+    }
+  
+    // ✅ LEGENDA CUSTOMIZADA
+    .custom-legend {
+      width: 100%;
+      max-width: 600px;
+      margin-top: var(--spacing-xl);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+      background: var(--caixa-greyscale-10);
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--caixa-shadow-sm);
+  
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        background: var(--caixa-white);
+        border-radius: var(--border-radius-sm);
+        box-shadow: var(--caixa-shadow-sm);
+        transition: all 0.2s ease;
+        cursor: pointer;
+  
+        &:hover {
+          background: var(--caixa-primary-10);
+          box-shadow: var(--caixa-shadow-md);
+          transform: translateY(-2px);
+        }
+  
+        .legend-color {
+          width: 20px;
+          height: 20px;
+          border-radius: 4px;
+          flex-shrink: 0;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+  
+        .legend-info {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          min-width: 0;
+  
+          .legend-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--caixa-greyscale-130);
+            line-height: 1.3;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+          }
+  
+          .legend-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+  
+            .legend-value {
+              font-size: 1rem;
+              font-weight: 700;
+              color: var(--caixa-primary-90);
+            }
+  
+            .legend-percent {
+              font-size: 1.1rem;
+              font-weight: 700;
+              color: var(--caixa-secondary-90);
+              padding: 2px 8px;
+              background: var(--caixa-secondary-10);
+              border-radius: var(--border-radius-sm);
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 900px) {
+    .chart-wrapper {
+      padding: var(--spacing-md) var(--spacing-sm);
+  
+      .custom-legend {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: var(--spacing-sm);
+      }
+  
+      ::ng-deep ngx-charts-pie-chart {
+        max-width: 450px !important;
+      }
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .chart-card {
+      padding: var(--spacing-sm) !important; // ✅ Reduz padding do card
+  
+      mat-card-content {
+        padding: 0 !important; // ✅ Remove padding interno
+      }
+    }
+  
+    .chart-wrapper {
+      padding: var(--spacing-xs) !important; // ✅ Padding mínimo
+      min-height: auto;
+      width: 100% !important;
+      max-width: 100% !important;
+  
+      // ✅ GRÁFICO OTIMIZADO PARA MOBILE
+      ::ng-deep ngx-charts-pie-chart {
+        width: 100% !important;
+        max-width: calc(100vw - 40px) !important; // ✅ Limita pela viewport
+        min-height: 280px;
+  
+        svg {
+          min-height: 280px !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+  
+        .pie-label {
+          font-size: 0.75rem !important;
+        }
+  
+        .pie-arc {
+          stroke-width: 2px;
+        }
+      }
+  
+      // ✅ LEGENDA OTIMIZADA PARA MOBILE
+      .custom-legend {
+        margin-top: var(--spacing-lg);
+        padding: var(--spacing-sm);
+        gap: var(--spacing-sm);
+        max-width: 100%;
+        width: 100%;
+  
+        .legend-item {
+          padding: var(--spacing-sm);
+          gap: var(--spacing-sm);
+          min-height: 60px;
+  
+          .legend-color {
+            width: 18px;
+            height: 18px;
+          }
+  
+          .legend-info {
+            gap: 6px;
+  
+            .legend-name {
+              font-size: 0.85rem;
+              font-weight: 600;
+              line-height: 1.4;
+              max-width: 100%;
+            }
+  
+            .legend-stats {
+              width: 100%;
+              gap: var(--spacing-xs);
+  
+              .legend-value {
+                font-size: 0.95rem;
+                flex: 1;
+              }
+  
+              .legend-percent {
+                font-size: 1.05rem;
+                padding: 4px 10px;
+                font-weight: 700;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .chart-card {
+      padding: var(--spacing-xs) !important; // ✅ Padding ainda menor
+    }
+  
+    .chart-wrapper {
+      padding: 4px !important;
+  
+      // ✅ Gráfico ajustado para telas menores
+      ::ng-deep ngx-charts-pie-chart {
+        max-width: calc(100vw - 30px) !important; // ✅ Ainda mais ajustado
+        min-height: 260px;
+  
+        svg {
+          min-height: 260px !important;
+        }
+  
+        .pie-label {
+          font-size: 0.7rem !important;
+        }
+      }
+  
+      .custom-legend {
+        padding: var(--spacing-xs);
+        gap: var(--spacing-xs);
+  
+        .legend-item {
+          padding: var(--spacing-xs);
+          min-height: 55px;
+  
+          .legend-color {
+            width: 16px;
+            height: 16px;
+          }
+  
+          .legend-info {
+            .legend-name {
+              font-size: 0.8rem;
+            }
+  
+            .legend-stats {
+              .legend-value {
+                font-size: 0.9rem;
+              }
+  
+              .legend-percent {
+                font-size: 1rem;
+                padding: 3px 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 900px) and (orientation: landscape) {
+    .chart-wrapper {
+      ::ng-deep ngx-charts-pie-chart {
+        max-width: 400px !important;
+        min-height: 250px;
+  
+        svg {
+          min-height: 250px !important;
+        }
+      }
+  
+      .custom-legend {
+        margin-top: var(--spacing-md);
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+  /* ====== CARD DE DESTAQUE (Produto Recomendado) ====== */
+  .highlight-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(135deg, var(--caixa-white) 0%, var(--caixa-primary-10) 100%);
+    border-left: 4px solid var(--caixa-secondary-70);
+  
+    mat-card-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--caixa-greyscale-90);
+      margin-bottom: var(--spacing-xs);
+  
+      &::before {
+        content: '⭐';
+      }
+    }
+  
+    mat-card-subtitle {
+      font-size: 0.875rem;
+      color: var(--caixa-greyscale-70);
+      margin-bottom: var(--spacing-md);
+    }
+  
+    h2 {
+      color: var(--caixa-primary-90);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: var(--spacing-sm) 0;
+    }
+  
+    p {
+      font-size: 0.95rem;
+      color: var(--caixa-greyscale-110);
+      margin: var(--spacing-xs) 0;
+  
+      strong {
+        color: var(--caixa-primary-90);
+        font-weight: 600;
+      }
+    }
+  
+    /* Botão do Card de Destaque */
+    button {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin-top: var(--spacing-md);
+      width: 100%;
+      min-height: 48px !important;
+      font-size: 1.1rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.8px !important;
+      line-height: 1 !important;
+      box-shadow: var(--caixa-shadow-md) !important;
+      background: linear-gradient(135deg, var(--caixa-secondary-70) 0%, var(--caixa-secondary-90) 100%) !important;
+      position: relative;
+      overflow: visible;
+      gap: 8px;
+  
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+  
+      &:hover {
+        box-shadow: var(--caixa-shadow-lg) !important;
+        transform: translateY(-2px);
+      }
+  
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+  
+  /* ====== SEÇÕES DE CONTEÚDO ====== */
+  .products-container,
+  .history-container {
+    max-width: 1200px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-md);
+  
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--caixa-primary-90);
+      margin-bottom: var(--spacing-lg);
+      padding-left: var(--spacing-md);
+      border-left: 4px solid var(--caixa-secondary-70);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+  
+      &::before {
+        content: '💼';
+        font-size: 1.75rem;
+      }
+    }
+  }
+  
+  /* ====== LISTA DE PRODUTOS ====== */
+  .products-container {
+    mat-list {
+      background: var(--caixa-white);
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--caixa-shadow-md);
+      padding: var(--spacing-md);
+    }
+  
+    mat-list-item {
+      border-radius: var(--border-radius-sm);
+      margin-bottom: var(--spacing-sm);
+      padding: var(--spacing-md) !important;
+      transition: all 0.2s ease;
+      background: var(--caixa-greyscale-10);
+  
+      &:hover {
+        background: var(--caixa-primary-10);
+        transform: translateX(4px);
+      }
+  
+      mat-icon {
+        color: var(--caixa-primary-90);
+        margin-right: var(--spacing-md);
+      }
+  
+      /* Botões na Lista de Produtos */
+      button {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 120px !important;
+        padding: 10px 20px !important;
+        font-weight: 600 !important;
+        line-height: 1 !important;
+        transition: all 0.3s ease !important;
+        border-radius: var(--border-radius-sm) !important;
+        gap: 6px;
+        margin-left: auto;
+  
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+          margin-right: 0;
+        }
+  
+        &:not(:disabled) {
+          background-color: var(--caixa-primary-90) !important;
+          color: var(--caixa-white) !important;
+          box-shadow: var(--caixa-shadow-sm) !important;
+  
+          &:hover {
+            background-color: var(--caixa-primary-110) !important;
+            box-shadow: var(--caixa-shadow-md) !important;
+            transform: translateX(4px);
+          }
+        }
+  
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          background-color: var(--caixa-greyscale-50) !important;
+          color: var(--caixa-greyscale-90) !important;
+        }
+      }
+    }
+  }
+  
+  /* ====== TABELA DE HISTÓRICO ====== */
+  .history-container {
+    h2::before {
+      content: '📈';
+    }
+  
+    table {
+      width: 100%;
+      background: var(--caixa-white);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      box-shadow: var(--caixa-shadow-md);
+  
+      th {
+        background: var(--caixa-primary-90);
+        color: var(--caixa-white);
+        font-weight: 600;
+        padding: var(--spacing-md) !important;
+        text-align: left;
+      }
+  
+      td {
+        padding: var(--spacing-md) !important;
+        border-bottom: 1px solid var(--caixa-greyscale-30);
+      }
+  
+      tr:hover {
+        background: var(--caixa-primary-10);
+      }
+    }
+  }
+  
+  /* ====== LOADING/SPINNERS ====== */
+  .loading-spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-3xl);
+    gap: var(--spacing-md);
+    color: var(--caixa-primary-90);
+  
+    mat-spinner {
+      ::ng-deep circle {
+        stroke: var(--caixa-primary-90) !important;
+      }
+    }
+  
+    p {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+  }
+  
+  .loading-text {
+    color: var(--caixa-greyscale-70);
+    font-style: italic;
+  }
+  
+  /* ====== FALLBACK LOADING ====== */
+  .fallback-loading {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    .loading-spinner {
+      h1 {
+        color: var(--caixa-primary-90);
+        font-size: 1.5rem;
+        margin-top: var(--spacing-md);
+      }
+    }
+  }
+  
+  /* ====== ANIMAÇÕES ====== */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .chart-card,
+  .highlight-card,
+  .products-container,
+  .history-container {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  /* ========================================
+     RESPONSIVIDADE
+     ======================================== */
+  
+  /* Tablets e telas médias */
+  @media (max-width: 900px) {
+    .main-content-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+  
+    .chart-wrapper {
+      height: 500px;
+  
+      ::ng-deep ngx-charts-advanced-pie-chart {
+        .advanced-pie-legend-wrapper {
+          .advanced-pie-legend {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      }
+    }
+  }
+  
+  /* Smartphones */
+  @media (max-width: 600px) {
+    .main-dashboard-container {
+      padding: var(--spacing-md) var(--spacing-sm);
+    }
+  
+    .greeting-bar {
+      text-align: center;
+      padding: var(--spacing-lg) var(--spacing-md);
+  
+      h1 {
+        font-size: 1.5rem;
+      }
+  
+      .risk-label {
+        font-size: 1rem;
+  
+        strong {
+          display: block;
+          margin: var(--spacing-sm) auto 0;
+          width: fit-content;
+        }
+      }
+    }
+  
+    .chart-wrapper {
+      height: 450px;
+      padding: var(--spacing-sm);
+  
+      ::ng-deep ngx-charts-advanced-pie-chart {
+        .advanced-pie-legend-wrapper {
+          max-width: 100% !important;
+          
+          .advanced-pie-legend {
+            padding: var(--spacing-sm) !important;
+            
+            .legend-items {
+              .legend-item {
+                padding: var(--spacing-xs) !important;
+                
+                .item-label {
+                  font-size: 0.8rem !important;
+                }
+                
+                .item-value {
+                  font-size: 0.9rem !important;
+                }
+                
+                .item-percent {
+                  font-size: 1.1rem !important;
+                }
+              }
+            }
+          }
+        }
+  
+        .pie-label {
+          font-size: 0.7rem !important;
+        }
+  
+        .total-value {
+          font-size: 1.5rem !important;
+        }
+  
+        .total-label {
+          font-size: 0.8rem !important;
+        }
+      }
+    }
+  
+    .products-container,
+    .history-container {
+      padding: 0 var(--spacing-sm);
+  
+      h2 {
+        font-size: 1.4rem;
+        text-align: center;
+        padding-left: 0;
+        border-left: none;
+        border-bottom: 3px solid var(--caixa-secondary-70);
+        padding-bottom: var(--spacing-sm);
+        justify-content: center;
+      }
+    }
+  
+    .products-container mat-list-item {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto !important;
+  
+      button {
+        margin-top: var(--spacing-sm);
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  
+    .history-container {
+      overflow-x: auto;
+  
+      table {
+        min-width: 600px;
+        font-size: 0.875rem;
+      }
+    }
+  }
+  
+  /* Telas muito pequenas */
+  @media (max-width: 400px) {
+    .greeting-bar h1 {
+      font-size: 1.25rem;
+    }
+  
+    .chart-wrapper {
+      height: 400px;
+    }
+  
+    .main-dashboard-container {
+      padding: var(--spacing-sm);
+    }
+  }
+  

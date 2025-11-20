@@ -1,0 +1,37 @@
+<div class="split-container">
+
+    <div class="column login-column">
+      <mat-card class="login-card">
+        <mat-card-header>
+          <mat-card-title>Login Tradicional</mat-card-title>
+          <mat-card-subtitle>Acesso via formulário (ambiente real)</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <app-login></app-login>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <div class="column selector-column">
+      <mat-card class="selector-card">
+        <mat-card-header>
+          <mat-card-title>Ou selecione um Perfil de Teste</mat-card-title>
+          <mat-card-subtitle>Acesso rápido para demonstração</mat-card-subtitle>
+        </mat-card-header>
+  
+        <mat-card-content class="profile-grid">
+          <div *ngFor="let perfil of perfisDeTeste" class="profile-item">
+            <h3>{{ perfil.nome }}</h3>
+            <p>Risco: <strong>{{ perfil.risco }}</strong></p>
+            
+            <button mat-flat-button 
+                    color="primary" 
+                    (click)="selecionarPerfil(perfil.id)">
+              Acessar
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+  </div>
